@@ -1,38 +1,25 @@
-interface ActionableDateOptions {
-    now?:           /**/ Date;                              // For testing purposes: the current date to test against. Omit to test against new Date()
-    newDate:        /**/ Date | null,                       // The new date to compare against the old date
-    oldDate:        /**/ Date | null,                       // The old date saved during the last iteration
-    oldDone:        /**/ boolean | null,                    // Did an announce or move occur during a previous iteration
-    onSaveDate?:    /**/ (date: Date | null) => void;       // Called to update the date if if newDate is different from oldDate.
-    onSaveDone:     /**/ (done: boolean) => void;           // Called to update the state of done if onAnnounce, onMove or onCancelled is called.
-    onAnnounce?:    /**/ () => void;                        // Called if action is required, but not yet performed before.
-    onMove?:        /**/ () => void;                        // Called if action is required, but at a different time than previously announced.
-    onCancel?:      /**/ () => void;                        // Called if a previously announced action is to be cancelled.
-}
-
-export async function track(opts: ActionableDateOptions) {
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.track = void 0;
+async function track(opts) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // For timetravel testing purposes you may pass a timestamp in now. If not, we'll act against the current timestamp
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    let now                 /**/ = opts.now ?? new Date();
-
+    let now /**/ = opts.now ?? new Date();
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // We must act if the actionDate is set and has passed.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const actionDateChanged /**/ = `${opts.newDate}` !== `${opts.oldDate}`;
-    const mustAct           /**/ = (opts.newDate !== null) && (opts.newDate <= now);
-    const mustNotAct        /**/ = !mustAct;
-    const haveActed         /**/ = opts.oldDone === true;
-    const haveNotActed      /**/ = opts.oldDone !== true;
-
+    const mustAct /**/ = (opts.newDate !== null) && (opts.newDate <= now);
+    const mustNotAct /**/ = !mustAct;
+    const haveActed /**/ = opts.oldDone === true;
+    const haveNotActed /**/ = opts.oldDone !== true;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Inform the caller if the date changed.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (actionDateChanged) {
         await opts.onSaveDate?.(opts.newDate);
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Announcement
     // If we need to act but we haven't yet, we'll do it. Since we have not acted before we call this an announce.
@@ -41,7 +28,6 @@ export async function track(opts: ActionableDateOptions) {
         await opts.onAnnounce?.();
         await opts.onSaveDone(true);
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Move
     // If we need to act and we already have, we will normally do nothing. Exept when the date changed.
@@ -50,7 +36,6 @@ export async function track(opts: ActionableDateOptions) {
         await opts.onMove?.();
         await opts.onSaveDone(true);
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Cancel
     // If we should (possibly no longer) act but we already did, we need to cancel.
@@ -59,7 +44,6 @@ export async function track(opts: ActionableDateOptions) {
         await opts.onCancel?.();
         await opts.onSaveDone(false);
     }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Default done to false
     //
@@ -68,4 +52,5 @@ export async function track(opts: ActionableDateOptions) {
         await opts.onSaveDone(false);
     }
 }
-
+exports.track = track;
+//# sourceMappingURL=index.js.map

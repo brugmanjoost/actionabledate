@@ -1,6 +1,6 @@
 {
   "name": "actionabledate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Identify when to act acrross iterations of a date value.",
   "author": "Joost Brugman <codingjoost@brugmanholding.com>",
   "license": "MIT",
