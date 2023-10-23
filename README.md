@@ -1,4 +1,4 @@
-![Node.js CI](https://github.com/brugmanjoost/settings/actions/workflows/nodejs-ci.yml/badge.svg) [![install size](https://packagephobia.com/badge?p=actionabledate)](https://packagephobia.com/result?p=actionabledate) ![license](https://img.shields.io/npm/l/actionabledate.svg) ![node version](https://img.shields.io/node/v/actionabledate.svg)
+![Node.js CI](https://github.com/brugmanjoost/settings/actions/workflows/nodejs-ci.yml/badge.svg) [![install size](https://packagephobia.com/badge?p=actionabledate)](https://packagephobia.com/result?p=actionabledate) ![License](https://img.shields.io/github/license/brugmanjoost/actionabledate) ![node version](https://img.shields.io/node/v/actionabledate.svg)
 
 
 # ActionableDate
